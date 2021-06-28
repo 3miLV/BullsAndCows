@@ -30,7 +30,7 @@ void mySleep()
 
 
 /**
-* Checks if a saved game file exists. 
+* Checks if a saved game file exists.
 * @param filename  The name of the file where it is saved.
 * @return true if file exists or false if not.
 */
@@ -41,7 +41,7 @@ bool fileExists(const std::string& filename)
 
 
 /*clears the console*/
-void clearConsole() 
+void clearConsole()
 {
 #if defined _WIN32
     system("cls");
@@ -56,18 +56,18 @@ void clearConsole()
 * @param guess Player guess number.
 * @return true if correct or false if not and prints the error message.
 */
-bool checkNums(std::string guess) 
+bool checkNums(std::string guess)
 {
-    if (guess.size() != 4) 
+    if (guess.size() != 4)
     {
         std::cout << "you must enter a 4 digit number!" << "\n";
         std::cout << "enter number: ";
         return false;
     }
 
-    for (auto ch : guess) 
+    for (auto ch : guess)
     {
-        if (!isdigit(ch)) 
+        if (!isdigit(ch))
         {
             std::cout << "The input must contain only numbers!" << "\n";
             std::cout << "enter number: ";
@@ -75,11 +75,11 @@ bool checkNums(std::string guess)
         }
     }
 
-    for (int i = 0; i < guess.size() - 1; i++) 
+    for (int i = 0; i < guess.size() - 1; i++)
     {
-        for (int j = i + 1; j < guess.size(); j++) 
+        for (int j = i + 1; j < guess.size(); j++)
         {
-            if (guess[i] == guess[j]) 
+            if (guess[i] == guess[j])
             {
                 std::cout << "there must be no duplicate digits in the number!" << "\n";
                 std::cout << "enter number: ";
@@ -96,24 +96,24 @@ bool checkNums(std::string guess)
 * @param secret The secret number of the opposing player.
 * @param guess Player guess number.
 * @param playerName The name of the player who guesses.
-* @return std::vector with three string elements: 
+* @return std::vector with three string elements:
     the assumed number, the number of bulls, the numbers of cows
 */
-std::vector<std::string> findBullsCows(std::string secret, std::string guess, std::string playerName) 
+std::vector<std::string> findBullsCows(std::string secret, std::string guess, std::string playerName)
 {
     int bulls = 0, cows = 0;
     std::vector<std::string> guesses;
 
-    for (int i = 0; i < secret.size(); i++) 
+    for (int i = 0; i < secret.size(); i++)
     {
-        if (secret[i] == guess[i]) 
+        if (secret[i] == guess[i])
         {
             bulls++;
         }
 
-        for (int j = 0; j < secret.size(); j++) 
+        for (int j = 0; j < secret.size(); j++)
         {
-            if ((guess[j] == secret[i]) && (guess[i] != secret[i])) 
+            if ((guess[j] == secret[i]) && (guess[i] != secret[i]))
             {
                 cows++;
             }
@@ -136,13 +136,13 @@ std::vector<std::string> findBullsCows(std::string secret, std::string guess, st
  * @param file File to save the name and secret number of the players.
  * @return std::vector with class Player object elements.
  */
-std::vector<Player> addPlayers(int pls, MyFile file) 
+std::vector<Player> addPlayers(int pls, MyFile file)
 {
     std::string name, secret;
     std::vector<Player> player;
     NPC npc;
 
-    for (int i = 0; i < pls; i++) 
+    for (int i = 0; i < pls; i++)
     {
         std::cout << "add name for player " << i + 1 << ": ";
         std::cin >> name;
@@ -150,7 +150,7 @@ std::vector<Player> addPlayers(int pls, MyFile file)
         std::cin >> secret;
 
         // Check if secret number is correct.
-        while (checkNums(secret) != true) 
+        while (checkNums(secret) != true)
         {
             std::cin >> secret;
         }
@@ -159,7 +159,7 @@ std::vector<Player> addPlayers(int pls, MyFile file)
         file.writeSecret("progress.txt", player[i].getName(), player[i].getSecretNum());
 
         // Checks if the player is the one to add computer player
-        if (pls == 1) 
+        if (pls == 1)
         {
             npc.setName("glupcho");
             mySleep();
@@ -180,13 +180,13 @@ std::vector<Player> addPlayers(int pls, MyFile file)
  * Returns std::vector with Player object elements restored from the saved file.
  * @param pls Numbers of human players.
  * @param playersMap std::map with the name and secret number of the players.
- * @return std::vector with class Player object elements. 
+ * @return std::vector with class Player object elements.
  */
-std::vector<Player> recoveryPlayers(int pls, std::map<std::string, std::string> playersMap) 
+std::vector<Player> recoveryPlayers(int pls, std::map<std::string, std::string> playersMap)
 {
     std::vector<Player> player;
 
-    for (auto it : playersMap) 
+    for (auto it : playersMap)
     {
         player.push_back(Player(it.first, it.second));
     }
@@ -200,7 +200,7 @@ std::vector<Player> recoveryPlayers(int pls, std::map<std::string, std::string> 
  * @param player std::vector with class Player object elements.
  * @param file class File object for writing and reading game progress.
  */
-void gameLoop(Game state, std::vector<Player> player, MyFile file) 
+void gameLoop(Game state, std::vector<Player> player, MyFile file)
 {
     NPC npc;    // Computer player object
 
@@ -213,17 +213,18 @@ void gameLoop(Game state, std::vector<Player> player, MyFile file)
         turn = state.getGameResultSize(player[0].getName()) + 1;
     }
 
-    if (state.getGameResultSize(player[0].getName()) > state.getGameResultSize(player[1].getName())) 
+    if (state.getGameResultSize(player[0].getName()) > state.getGameResultSize(player[1].getName()))
     {
         temp = 1;
         turn = state.getGameResultSize(player[1].getName()) + 1;
     }
 
-    while (end != 0) 
+    while (end != 0)
     {
-        for (int i = temp; i < 2; i++) 
+        for (int i = temp; i < 2; i++)
         {
-            if(gBulls == 4){ // Цhecks if the player has known a number after loading the interrupted game.
+            std::cout << "**" << gBulls << "**";
+            if(gBulls == 4){ // Checks if the player has known a number after loading the interrupted game.
                 goto jump;
             }
 
@@ -233,31 +234,31 @@ void gameLoop(Game state, std::vector<Player> player, MyFile file)
             std::cout << player[i].getName() << " turn " << turn << ": " << std::endl;
             std::cout << "---------------------\n";
 
-            if (gCheckNpc != 1) 
+            if (gCheckNpc != 1)
             {
                 state.printGameResult(player[i].getName());
                 std::cout << "enter number: ";
                 std::cin >> guess;
 
-                while (checkNums(guess) != true) 
+                while (checkNums(guess) != true)
                 {
                     std::cin >> guess;
                 }
             }
-            else 
+            else
             {
-                if (i == 1) 
+                if (i == 1)
                 {
                     state.printGameResult(player[i].getName());
                     mySleep();
                     guess = npc.generateRandomNum();
                 }
-                else 
+                else
                 {
                     state.printGameResult(player[i].getName());
                     std::cout << "enter number: ";
                     std::cin >> guess;
-                    while (checkNums(guess) != true) 
+                    while (checkNums(guess) != true)
                     {
                         std::cin >> guess;
                     }
@@ -268,38 +269,38 @@ void gameLoop(Game state, std::vector<Player> player, MyFile file)
             {
                 currentGuess = findBullsCows(player[i + 1].getSecretNum(), guess, player[i].getName());
             }
-            else if (i == 1) 
+            else if (i == 1)
             {
                 currentGuess = findBullsCows(player[i - 1].getSecretNum(), guess, player[i].getName());
             }
 
             state.setGameResult(currentGuess, player[i].getName());
-            // clearConsole();
-            // state.printGameResult(player[i].getName());
             file.writeGameProgress("progress.txt", player[i].getName(), currentGuess);
             currentGuess.clear();
         jump:
-            if (gBulls == 4) 
+            if (gBulls == 4)
             {
-                if (i == 0)
+                if (i == 0 || gIsLoad == 1)
                 {
+                    i = 0;
+                    std::cout << "*" << gBulls << "*";
                     clearConsole();
-                    std::cout << player[i].getName() << " guessed " << player[i + 1].getName() << " secret number" << std::endl;
+                    std::cout << player[i].getName() << " guessed " << player[i + 1].getName() << " the secret number" << std::endl;
                     std::cout << "last chance for " << player[i + 1].getName() << ": " << std::endl;
                     std::cout << "---------------------\n";
 
-                    if (gCheckNpc != 1) 
+                    if (gCheckNpc != 1)
                     {
                         state.printGameResult(player[i + 1].getName());
                         std::cout << "enter number: ";
                         std::cin >> guess;
 
-                        while (checkNums(guess) != true) 
+                        while (checkNums(guess) != true)
                         {
                             std::cin >> guess;
                         }
                     }
-                    else 
+                    else
                     {
                         state.printGameResult(player[i + 1].getName());
                         mySleep();
@@ -308,10 +309,9 @@ void gameLoop(Game state, std::vector<Player> player, MyFile file)
 
                     currentGuess = findBullsCows(player[i].getSecretNum(), guess, player[i].getName());
                     state.setGameResult(currentGuess, player[i + 1].getName());
-                    //state.printGameResult(player[i + 1].getName());
                     currentGuess.clear();
 
-                    if (gBulls == 4) 
+                    if (gBulls == 4)
                     {
                         state.printGameResult(player[i + 1].getName());
                         clearConsole();
@@ -320,8 +320,10 @@ void gameLoop(Game state, std::vector<Player> player, MyFile file)
                         std::cout << "*****************************\n";
                         file.writeGameHistory("gamehistory.txt", state.getGameResult(), " draw");
                         std::remove("progress.txt");
-                        gCheckNpc = 0;
                         state.clear();
+                        gBulls = 0;
+                        gCheckNpc = 0;
+                        gIsLoad = 0;
                         gameMenu(player, state, file);
                     }
                 }
@@ -333,8 +335,10 @@ void gameLoop(Game state, std::vector<Player> player, MyFile file)
                 std::cout << "*****************************\n";
                 file.writeGameHistory("gamehistory.txt", state.getGameResult(), (" winer: " + player[i].getName()));
                 std::remove("progress.txt");
-                gCheckNpc = 0;
                 state.clear();
+                gBulls = 0;
+                gCheckNpc = 0;
+                gIsLoad = 0;
                 gameMenu(player, state, file);
             }
         }
@@ -350,12 +354,12 @@ void gameLoop(Game state, std::vector<Player> player, MyFile file)
  * @param curentState class Game object for processing the instant progress of the game.
  * @param file class File object for writing and reading game progress
  */
-void gameMenu(std::vector<Player> player, Game currentState, MyFile file) 
+void gameMenu(std::vector<Player> player, Game currentState, MyFile file)
 {
     int end = 1, pls;
     std::string choice;
 
-    while (end) 
+    while (end)
     {
         std::cout << "-----------------------------\n";
         std::cout << "WELCOME TO BULLS AND COWS" << std::endl;
@@ -368,7 +372,7 @@ void gameMenu(std::vector<Player> player, Game currentState, MyFile file)
 
         std::cin >> choice;
 
-        if (choice == "1") 
+        if (choice == "1")
         {
             clearConsole();
             std::cout << "-----------------------------\n";
@@ -379,7 +383,7 @@ void gameMenu(std::vector<Player> player, Game currentState, MyFile file)
             player = addPlayers(pls, file);
             gameLoop(currentState, player, file);
         }
-        else if (choice == "2") 
+        else if (choice == "2")
         {
             clearConsole();
             std::cout << "-----------------------------\n";
@@ -390,12 +394,12 @@ void gameMenu(std::vector<Player> player, Game currentState, MyFile file)
             player = addPlayers(pls, file);
             gameLoop(currentState, player, file);
         }
-        else if (choice == "3") 
+        else if (choice == "3")
         {
             clearConsole();
             file.readGameHistory("gamehistory.txt");
         }
-        else if (choice == "4") 
+        else if (choice == "4")
         {
             clearConsole();
             std::cout << "Exit from game!" << std::endl;
@@ -414,7 +418,7 @@ void gameMenu(std::vector<Player> player, Game currentState, MyFile file)
 }
 
 
-int main() 
+int main()
 {
     int pls=0, choice;
     std::vector<Player> player;
@@ -423,7 +427,7 @@ int main()
 
     clearConsole();
 
-    if (fileExists("progress.txt")) 
+    if (fileExists("progress.txt"))
     {
         std::cout << "-----------------------------\n";
         std::cout << "An unfinished game was found!" << std::endl;
@@ -432,7 +436,7 @@ int main()
         std::cout << "-----------------------------\n";
         std::cin >> choice;
 
-        if (choice == 1) 
+        if (choice == 1)
         {
             clearConsole();
             std::cout << "-----------------------------\n";
@@ -463,7 +467,7 @@ int main()
             std::cout << "\n";
             gameLoop(currentState, player, file);
         }
-        else if (choice == 2) 
+        else if (choice == 2)
         {
             std::remove("progress.txt");
             clearConsole();

@@ -52,9 +52,10 @@ public:
             v.push_back("number: " + buffer + " |");
             ss >> buffer;
             v.push_back("bulls: " + buffer + " |");
-            
+
             if(buffer == "4"){
                 gBulls = 4;
+                gIsLoad = 1;
             }
 
             ss >> buffer;

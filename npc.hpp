@@ -25,13 +25,9 @@ public:
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         generatedNum = "1234567890";
 
-        while(counter < 10)
-        {
-            std::shuffle(generatedNum.begin(), generatedNum.end(), std::default_random_engine(seed));
-            counter++;
-        }
+        std::shuffle(generatedNum.begin(), generatedNum.end(), std::default_random_engine(seed));
 
-        return generatedNum.substr(0,4); 
+        return generatedNum.substr(0,4);
     }
 };
 

@@ -72,11 +72,11 @@ public:
      * Тakes the number of moves the player has made.
      * @param player Player name.
      */
-    int getGameResultSize(std::string player) const 
+    int getGameResultSize(std::string player) const
     {
         for(auto it : gameResult)
         {
-            if (it.first == player) 
+            if (it.first == player)
             {
                 return it.second.size();
             }
