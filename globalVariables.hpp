@@ -7,6 +7,7 @@ int gBulls=0;
 //For check if you are playing against a computer
 int gCheckNpc=0;
 
+// Checks if the game is loaded
 int gIsLoad=0;
 
 #endif // __GLOBALVARIABLES_H__

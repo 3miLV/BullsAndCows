@@ -474,6 +474,7 @@ int main()
             gameMenu(player, currentState, file);
         }
     }
+    
     gameMenu(player, currentState, file);
 
     return 0;
