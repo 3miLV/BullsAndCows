@@ -9,7 +9,7 @@
 class Game
 {
 private:
-
+    
     std::map<std::string, std::vector<std::vector<std::string>>> gameResult;
     std::map<std::string, std::string> secret;
 

@@ -13,7 +13,6 @@ class NPC : public Player
 {
 public:
 
-
     /**
      * Generate random numbers for a computer player.
      * @return Four digit number

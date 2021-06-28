@@ -10,7 +10,6 @@
 #include "game.hpp"
 #include "globalVariables.hpp"
 
-
 class MyFile
 {
 public:
